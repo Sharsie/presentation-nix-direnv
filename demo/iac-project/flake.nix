@@ -1,0 +1,1 @@
+../../snippets/flake-iac-multiarch.nix

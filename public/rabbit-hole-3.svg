@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" fill="none">
+  <!-- Ladder 1: center, upright (figure on this one) -->
+  <g transform="translate(150,268) rotate(0)">
+    <line x1="-18" y1="0" x2="-18" y2="-130" stroke="#94a3b8" stroke-width="5.5" stroke-linecap="round"/>
+    <line x1="18" y1="0" x2="18" y2="-130" stroke="#94a3b8" stroke-width="5.5" stroke-linecap="round"/>
+    <line x1="-18" y1="-22" x2="18" y2="-22" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+    <line x1="-18" y1="-43" x2="18" y2="-43" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+    <line x1="-18" y1="-65" x2="18" y2="-65" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+    <line x1="-18" y1="-87" x2="18" y2="-87" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+    <line x1="-18" y1="-108" x2="18" y2="-108" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+    <!-- Figure: confused pose — arms spread wide looking at the other ladders -->
+    <circle cx="0" cy="-75" r="7" fill="#fbbf24"/>
+    <g stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round">
+      <line x1="0" y1="-68" x2="0" y2="-53"/>
+      <line x1="0" y1="-63" x2="-30" y2="-60"/>
+      <line x1="0" y1="-63" x2="30" y2="-60"/>
+      <line x1="0" y1="-53" x2="-7" y2="-43"/>
+      <line x1="0" y1="-53" x2="7" y2="-43"/>
+    </g>
+    <text x="22" y="-78" font-size="13" fill="#fbbf24" font-family="sans-serif">?</text>
+  </g>
+  <!-- Ladder 2: left side, tilted left -->
+  <g transform="translate(75,248) rotate(-18)">
+    <line x1="-15" y1="0" x2="-15" y2="-100" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+    <line x1="15" y1="0" x2="15" y2="-100" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+    <line x1="-15" y1="-20" x2="15" y2="-20" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="-15" y1="-40" x2="15" y2="-40" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="-15" y1="-60" x2="15" y2="-60" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="-15" y1="-80" x2="15" y2="-80" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+  <!-- Ladder 3: right side, tilted right -->
+  <g transform="translate(234,252) rotate(15)">
+    <line x1="-15" y1="0" x2="-15" y2="-105" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+    <line x1="15" y1="0" x2="15" y2="-105" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+    <line x1="-15" y1="-21" x2="15" y2="-21" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="-15" y1="-42" x2="15" y2="-42" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="-15" y1="-63" x2="15" y2="-63" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="-15" y1="-84" x2="15" y2="-84" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+</svg>

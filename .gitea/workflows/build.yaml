@@ -1,0 +1,81 @@
+name: build-push
+on:
+  push:
+    branches: [main]
+    tags: ['*']
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    container:
+      image: docksee/nixos-gitea:${{ vars.NIX_IMAGE_VERSION }}
+    outputs:
+      version: ${{ steps.push.outputs.version }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # full history + tags so the flake's version derivation works
+      - name: Login to Docker Hub
+        env:
+          TOKEN_DOCKERHUB: ${{ secrets.TOKEN_DOCKERHUB }}
+          USER_DOCKERHUB: ${{ secrets.USER_DOCKERHUB }}
+        run: |
+          echo "$TOKEN_DOCKERHUB" | \
+            nix shell nixpkgs#crane --command \
+              crane auth login docker.io -u "$USER_DOCKERHUB" --password-stdin
+      - name: Build and push
+        id: push
+        run: |
+          # `nix run .#push` prints `PUSHED_VERSION=<tag>` on the last interesting line.
+          OUTPUT="$(nix run .#push)"
+          echo "$OUTPUT"
+          VERSION="$(echo "$OUTPUT" | grep '^PUSHED_VERSION=' | tail -1 | cut -d= -f2)"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+  bump-chart:
+    # Bumps image.tag in the matching nix-flakes-with-iac-chart repo so ArgoCD
+    # auto-syncs the new image. This project has no staging environment — every
+    # push to main (and every tag) bumps the single values.yaml.
+    needs: push
+    runs-on: ubuntu-latest
+    container:
+      image: docksee/nixos-gitea:${{ vars.NIX_IMAGE_VERSION }}
+    if: github.ref_type == 'tag' || github.ref == 'refs/heads/main'
+    # Serialise chart-bump commits across parallel app pushes — two jobs racing
+    # to push the same chart branch causes one to fail with non-fast-forward.
+    # The internal rebase loop handles the cooperative case; this concurrency
+    # group avoids the contention in the first place.
+    concurrency:
+      group: bump-chart-nix-flakes-with-iac
+      cancel-in-progress: false
+    steps:
+      - name: Bump image tag in chart repo
+        env:
+          TOKEN_GITEA_CHART_SERVICE_ACCOUNT: ${{ secrets.TOKEN_GITEA_CHART_SERVICE_ACCOUNT }}
+          VERSION: ${{ needs.push.outputs.version }}
+          CHART_REPO: git.c3c.cz/lukas-cech/nix-flakes-with-iac-chart
+        run: |
+          set -euo pipefail
+          git config --global user.email "chart-service-account@c3c.cz"
+          git config --global user.name  "chart-service-account"
+
+          TMP="$(mktemp -d)"
+          git clone "https://chart-service-account:${TOKEN_GITEA_CHART_SERVICE_ACCOUNT}@${CHART_REPO}.git" "$TMP/chart"
+          cd "$TMP/chart"
+
+          git fetch origin main
+          git reset --hard origin/main
+
+          nix shell nixpkgs#yq-go --command \
+            yq -i ".image.tag = \"${VERSION}\"" values.yaml
+
+          if git diff --quiet; then
+            echo "image.tag already at ${VERSION}, nothing to commit"
+            exit 0
+          fi
+
+          git add values.yaml
+          git commit -m "chore: bump nix-flakes-with-iac image to ${VERSION}"
+
+          git push origin HEAD:main

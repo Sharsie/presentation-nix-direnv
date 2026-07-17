@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.slidev/
+result
+result/
+result-*
+.direnv/
+.pnpm-store/
+*.log
+
+# Go
+/vendor/
+*.test
+*.out

@@ -1,0 +1,4 @@
+.slidev-layout a {
+  border-bottom: none;
+  color: var(--slidev-theme-primary);
+}
