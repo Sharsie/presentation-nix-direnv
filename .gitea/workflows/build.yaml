@@ -34,7 +34,7 @@ jobs:
           VERSION="$(echo "$OUTPUT" | grep '^PUSHED_VERSION=' | tail -1 | cut -d= -f2)"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
   bump-chart:
-    # Bumps image.tag in the matching nix-flakes-with-iac-chart repo so ArgoCD
+    # Bumps image.tag in the matching presentation-nix-direnv-chart repo so ArgoCD
     # auto-syncs the new image. This project has no staging environment — every
     # push to main (and every tag) bumps the single values.yaml.
     needs: push
@@ -47,14 +47,14 @@ jobs:
     # The internal rebase loop handles the cooperative case; this concurrency
     # group avoids the contention in the first place.
     concurrency:
-      group: bump-chart-nix-flakes-with-iac
+      group: bump-chart-presentation-nix-direnv
       cancel-in-progress: false
     steps:
       - name: Bump image tag in chart repo
         env:
           TOKEN_GITEA_CHART_SERVICE_ACCOUNT: ${{ secrets.TOKEN_GITEA_CHART_SERVICE_ACCOUNT }}
           VERSION: ${{ needs.push.outputs.version }}
-          CHART_REPO: git.c3c.cz/lukas-cech/nix-flakes-with-iac-chart
+          CHART_REPO: git.c3c.cz/lukas-cech/presentation-nix-direnv-chart
         run: |
           set -euo pipefail
           git config --global user.email "chart-service-account@c3c.cz"
@@ -76,6 +76,6 @@ jobs:
           fi
 
           git add values.yaml
-          git commit -m "chore: bump nix-flakes-with-iac image to ${VERSION}"
+          git commit -m "chore: bump presentation-nix-direnv image to ${VERSION}"
 
           git push origin HEAD:main

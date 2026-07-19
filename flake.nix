@@ -84,16 +84,16 @@
 
         # Splice the static deck export into the Go server's embed directory so
         # the served site always matches the source tree being built.
-        srcWithStatic = pkgs.runCommand "nix-flakes-with-iac-src" { } ''
+        srcWithStatic = pkgs.runCommand "presentation-nix-direnv-src" { } ''
           cp -r ${./.} $out
           chmod -R u+w $out
-          rm -rf $out/cmd/nix-flakes-with-iac/static
-          mkdir -p $out/cmd/nix-flakes-with-iac/static
-          cp -r ${deck}/* $out/cmd/nix-flakes-with-iac/static/
+          rm -rf $out/cmd/presentation-nix-direnv/static
+          mkdir -p $out/cmd/presentation-nix-direnv/static
+          cp -r ${deck}/* $out/cmd/presentation-nix-direnv/static/
 
           sed -i \
             's#</head>#<style>${publicNavCss}</style></head>#' \
-            $out/cmd/nix-flakes-with-iac/static/index.html
+            $out/cmd/presentation-nix-direnv/static/index.html
         '';
 
         nativeGoarch = if builtins.match "aarch64-.*" system != null then "arm64" else "amd64";
@@ -105,11 +105,11 @@
             goarch,
           }:
           pkgs.buildGoModule {
-            pname = "nix-flakes-with-iac";
+            pname = "presentation-nix-direnv";
             inherit version;
             src = srcWithStatic;
             vendorHash = null; # stdlib-only; set to a real hash once you add deps
-            subPackages = [ "cmd/nix-flakes-with-iac" ];
+            subPackages = [ "cmd/presentation-nix-direnv" ];
 
             env.CGO_ENABLED = 0;
 
@@ -148,7 +148,7 @@
 
             meta = {
               description = "Nix + direnv for reproducible IaC tooling — conference talk (Slidev deck)";
-              mainProgram = "nix-flakes-with-iac";
+              mainProgram = "presentation-nix-direnv";
             };
           };
 
@@ -156,7 +156,7 @@
         mkContainer =
           { goarch, ociArch }:
           pkgs.dockerTools.buildLayeredImage {
-            name = "nix-flakes-with-iac";
+            name = "presentation-nix-direnv";
             tag = version;
             architecture = ociArch;
             compressor = "none";
@@ -178,7 +178,7 @@
               # a numeric UID:GID, which is what kubernetes consumes anyway.
               # Required for clusters enforcing PodSecurityAdmission restricted.
               User = "65534:65534";
-              Cmd = [ "/bin/nix-flakes-with-iac" ];
+              Cmd = [ "/bin/presentation-nix-direnv" ];
               Env = [
                 "SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt"
                 "PORT=8080"
@@ -235,7 +235,7 @@
         # Multi-arch push wrapper. Runs scripts/push.sh under a shell with
         # nix, crane, and git on PATH. Always invoke via `nix run .#push`.
         pushScript = pkgs.writeShellApplication {
-          name = "nix-flakes-with-iac-push";
+          name = "presentation-nix-direnv-push";
           runtimeInputs = with pkgs; [
             nix
             crane
@@ -283,10 +283,10 @@
         # nix run → live-reload dev server (slides.md); nix run .#<flavor> →
         # same for slides-<flavor>.md (see deckEntries).
         apps = builtins.mapAttrs (_: mkDevApp) deckEntries // {
-          # nix run .#push → multi-arch push to docker.io/docksee/lukas-cech-nix-flakes-with-iac
+          # nix run .#push → multi-arch push to docker.io/docksee/lukas-cech-presentation-nix-direnv
           push = {
             type = "app";
-            program = "${pushScript}/bin/nix-flakes-with-iac-push";
+            program = "${pushScript}/bin/presentation-nix-direnv-push";
           };
         };
 

@@ -112,7 +112,7 @@ func main() {
 
 	errCh := make(chan error, 1)
 	go func() {
-		slog.Info("starting nix-flakes-with-iac", "version", version, "addr", addr)
+		slog.Info("starting presentation-nix-direnv", "version", version, "addr", addr)
 		ready.Store(true)
 		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			errCh <- err

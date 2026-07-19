@@ -3,7 +3,7 @@ set -euo pipefail
 
 REGISTRY="docker.io"
 REGISTRY_USER="docksee"
-REPO="${REGISTRY}/${REGISTRY_USER}/lukas-cech-nix-flakes-with-iac"
+REPO="${REGISTRY}/${REGISTRY_USER}/lukas-cech-presentation-nix-direnv"
 
 if ! crane auth get docker.io >/dev/null 2>&1; then
   echo "Cannot authenticate against registry, will perform login and logout"

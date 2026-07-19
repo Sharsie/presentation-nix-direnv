@@ -114,24 +114,24 @@ Read docs/superpowers/plans/2026-06-11-nix-envs-for-iac-slide-authoring.md for s
 ## Deployment (lab project)
 
 This repo is wired as a **lab project** — deployed to the cluster at
-**nix-iac.c3c.cz**. Read `lab/SKILL.md` (this user's global lab conventions
+**nix-direnv.c3c.cz**. Read `lab/SKILL.md` (this user's global lab conventions
 skill) for the full picture; summary below.
 
 - `nix build` (default package) still exports the raw static deck to
   `./result`, unchanged from before — that workflow is untouched.
 - `nix build .#server` builds a small Go binary
-  (`cmd/nix-flakes-with-iac/main.go`) that embeds the static export
+  (`cmd/presentation-nix-direnv/main.go`) that embeds the static export
   (spliced in via the flake's `srcWithStatic`) and serves it, plus
   `/livez` + `/readyz` for k8s probes. This is the only reason a `go.mod`
   exists in an otherwise-Slidev repo.
 - `nix build .#container-amd64` / `.#container-arm64` — OCI images.
 - `nix run .#push` — multi-arch push to
-  `docker.io/docksee/lukas-cech-nix-flakes-with-iac`.
+  `docker.io/docksee/lukas-cech-presentation-nix-direnv`.
 - `.gitea/workflows/build.yaml` — CI: builds + pushes on every `main` push
   and every tag, then bumps `image.tag` in the sibling chart repo
-  `git.c3c.cz/lukas-cech/nix-flakes-with-iac-chart` (`values.yaml`).
+  `git.c3c.cz/lukas-cech/presentation-nix-direnv-chart` (`values.yaml`).
   **No staging environment** for this project (explicit user decision) —
   every push is a production deploy, unlike the lab default of a
   staging/production split.
-- Remotes: `origin` → `git@git.c3c.cz:lukas-cech/nix-flakes-with-iac.git`
+- Remotes: `origin` → `git@git.c3c.cz:lukas-cech/presentation-nix-direnv.git`
   (gitea, primary). `public` → the original GitHub repo, kept as a mirror.

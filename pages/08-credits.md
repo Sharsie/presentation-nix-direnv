@@ -10,9 +10,9 @@ Questions?
 
 <div><carbon-logo-linkedin /> <a href="https://linkedin.com/in/lukas-cech" target="_blank">lukas-cech</a> | <a href="https://profile.c3c.cz" target="_blank">profile.c3c.cz</a></div>
 
-Deck: [nix-iac.c3c.cz](https://nix-iac.c3c.cz)
+Deck: [nix-direnv.c3c.cz](https://nix-direnv.c3c.cz)
 
-Sources: [deck.c3c.cz/nix-iac](https://deck.c3c.cz/nix-iac)
+Sources: [deck.c3c.cz/nix-direnv](https://deck.c3c.cz/nix-direnv)
 
 <hr class="my-4 border-t opacity-20">
 

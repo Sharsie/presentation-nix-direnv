@@ -128,7 +128,7 @@ nix shell "github:nixos/nixpkgs/51e2b64e"#cowsay nixpkgs#lolcat
 Want to run this deck?
 
 ```bash
-nix run "github:Sharsie/presentation-nix-flakes-with-iac"
+nix run "github:Sharsie/presentation-presentation-nix-direnv"
 ```
 
 </v-click>
