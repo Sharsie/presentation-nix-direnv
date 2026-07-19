@@ -10,7 +10,7 @@ layout: two-cols-header
 
 ```nix {all|13,16|all}
 {
-  description = "IaC dev environment";
+  description = "dev environment";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
 
@@ -39,7 +39,7 @@ layout: two-cols-header
 
 ```nix {4,9|11,19|13,16|all}{at:'3'}
 {
-  description = "IaC dev environment";
+  description = "dev environment";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
   inputs.flake-utils.url = "github:numtide/flake-utils";
 

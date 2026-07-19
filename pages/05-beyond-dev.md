@@ -2,7 +2,16 @@
 layout: statement
 ---
 
+<template v-if="$slidev.configs.flavor === 'devops' || $slidev.configs.flavor === 'atlas'">
+
 # This is not just another tfenv
+
+</template>
+<template v-else>
+
+# This is not just another version manager
+
+</template>
 
 <v-click>
 

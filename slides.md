@@ -1,6 +1,6 @@
 ---
 theme: seriph
-title: 'Nix + direnv — Modern DevOps framework/approach with TF & IaC'
+title: 'Nix + direnv — reproducible dev environments, zero setup'
 favicon: '/favicon.svg'
 info: |
   ## Nix + direnv for reproducible dev environments

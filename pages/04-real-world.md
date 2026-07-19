@@ -16,12 +16,30 @@ In the next slides, IaC will be introduced into the mix.
 
 ---
 
+<template v-if="$slidev.configs.flavor === 'devops' || $slidev.configs.flavor === 'atlas'">
+
 # Flake with IaC tools
+
+</template>
+<template v-else>
+
+# Flake with real tools
+
+</template>
 
 <v-switch>
 <template #0>
 
+<template v-if="$slidev.configs.flavor === 'devops' || $slidev.configs.flavor === 'atlas'">
+
 <<< @/snippets/flake-iac.nix nix {17-21|8-14}{at:'0'}
+
+</template>
+<template v-else>
+
+<<< @/snippets/flake-project.nix nix {17-21|8-14}{at:'0'}
+
+</template>
 
 </template>
 <template #2>
@@ -91,6 +109,8 @@ Creating a shortcut. `pkgs` is reused **A LOT**.
 
 <div v-click="7">
 
+<template v-if="$slidev.configs.flavor === 'devops' || $slidev.configs.flavor === 'atlas'">
+
 ```nix {2,4}
   devShells.x86_64-linux.default =
     pkgs.mkShell {
@@ -99,6 +119,20 @@ Creating a shortcut. `pkgs` is reused **A LOT**.
       ];
     };
 ```
+
+</template>
+<template v-else>
+
+```nix {2,4}
+  devShells.x86_64-linux.default =
+    pkgs.mkShell {
+      packages = [
+        pkgs.nodejs_22 pkgs.go # ...
+      ];
+    };
+```
+
+</template>
 
 </div>
 
@@ -119,7 +153,16 @@ pkgs = import nixpkgs { inherit system; };
 </template>
 <template #9>
 
+<template v-if="$slidev.configs.flavor === 'devops' || $slidev.configs.flavor === 'atlas'">
+
 <<< @/snippets/flake-iac.nix nix {15-23}{at:'0'}
+
+</template>
+<template v-else>
+
+<<< @/snippets/flake-project.nix nix {15-23}{at:'0'}
+
+</template>
 
 </template>
 </v-switch>
@@ -159,11 +202,24 @@ class: text-center
 
 # Live
 
+<template v-if="$slidev.configs.flavor === 'devops' || $slidev.configs.flavor === 'atlas'">
+
 ```bash
 cd ./demo/iac-project
 ```
 
 <div class="opacity-60 mt-4">terraform · terragrunt · python — locked, instantly</div>
+
+</template>
+<template v-else>
+
+```bash
+cd ./demo/project
+```
+
+<div class="opacity-60 mt-4">node · go · python — locked, instantly</div>
+
+</template>
 
 <!--
 LIVE TERMINAL
@@ -175,4 +231,8 @@ LIVE TERMINAL
 - cd out
 
 After demo - mention that the previous examples used hardcoded linux system - set up stage for next slide
+
+For generic flavor: show `node --version` / `go version` instead of `terraform -version`
+- cd into ./demo/project instead of ./demo/iac-project
+- show node --version / go version inside the demo (same cat .envrc / cd out steps)
 -->

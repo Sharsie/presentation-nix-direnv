@@ -1,6 +1,6 @@
 let
   pkgs = import nixpkgs {
     system = "x86_64-linux";
-    config.allowUnfree = true; # terraform is unfree
+    config.allowUnfree = true; # if using unfree packages
   };
 in {}

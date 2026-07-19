@@ -8,7 +8,12 @@ div {
   line-height: 1;
 }
 </style>
+<template v-if="$slidev.configs.flavor === 'devops' || $slidev.configs.flavor === 'atlas'">
 <div>iac-project/</div>
+</template>
+<template v-else>
+<div>project/</div>
+</template>
 <div>├── flake.nix</div>
 <div class="text-indigo-400 font-bold">└── .envrc</div>
 </div>

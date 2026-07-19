@@ -21,12 +21,24 @@ BTW This very deck runs on the setup I'm about to show you
 
 </template>
 
-<template v-else>
+<template v-else-if="$slidev.configs.flavor === 'devops'">
 
 <v-click>
 
 - Teams inherit my IaC and CI/CD setups — when tooling breaks, it breaks on my street
 - Working with `terraform`+`terragrunt` and project tools daily — not an architect's drive-by opinion
+- This very deck runs on the setup I'm about to show you
+
+</v-click>
+
+</template>
+
+<template v-else>
+
+<v-click>
+
+- 20+ years across development and ops — I build the environments other teams inherit; when tooling breaks, it breaks on my street
+- Hands-on with project and infra tooling every day — not an architect's drive-by opinion
 - This very deck runs on the setup I'm about to show you
 
 </v-click>

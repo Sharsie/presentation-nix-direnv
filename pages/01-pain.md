@@ -22,9 +22,10 @@ You manage projects. So you install tools. Then you manage the tools.
 
 <v-click>
 
-- `pyenv` — locks Python
 - `nvm` — locks Node.js
-- `tenv` — locks a bunch of IaC tools
+- `pyenv` — locks Python
+- `sdkman` — locks Java/JVM tools
+- `gvm` — locks Go
 - `asdf` — locks whatever has a plugin, nothing underneath it
 
 </v-click>
@@ -124,24 +125,51 @@ Explain the history
 <div class="relative overflow-hidden">
   <img :src="'/tools-vs-nix-zoo.png'" class="absolute inset-0 w-full h-full object-cover" />
 
+<template v-if="$slidev.configs.flavor === 'devops' || $slidev.configs.flavor === 'atlas'">
   <!-- tfenv -> Terraform (cage 1, top-left) -->
   <img :src="'/icons/terraform.svg'" class="absolute" style="left: 13%; top: 16.8%; width: 6%; transform: translate(-50%, -50%);" />
   <!-- tgenv -> Terragrunt (cage 2, top-mid) -->
   <img :src="'/icons/terragrunt.png'" class="absolute" style="left: 50.5%; top: 16.5%; width: 6%; transform: translate(-50%, -50%);" />
   <!-- tenv -> OpenTofu (cage 3, top-right) -->
   <img :src="'/icons/opentofu.svg'" class="absolute" style="left: 86.5%; top: 16.3%; width: 6%; transform: translate(-50%, -50%);" />
+</template>
+<template v-else>
+  <!-- nvm -> Node.js (cage 1, top-left) -->
+  <img :src="'/icons/nodejs.svg'" class="absolute" style="left: 13%; top: 16.8%; width: 6%; transform: translate(-50%, -50%);" />
+  <!-- sdkman -> Java/JVM (cage 2, top-mid) -->
+  <img :src="'/icons/java.svg'" class="absolute" style="left: 50.5%; top: 16.5%; width: 6%; transform: translate(-50%, -50%);" />
+  <!-- gvm -> Go (cage 3, top-right) -->
+  <img :src="'/icons/go.svg'" class="absolute" style="left: 86.5%; top: 16.3%; width: 6%; transform: translate(-50%, -50%);" />
+</template>
+
   <!-- pyenv -> Python (cage 5, bottom-mid) -->
   <img :src="'/icons/python.svg'" class="absolute" style="left: 48%; top: 43%; width: 7%; transform: translate(-50%, -50%);" />
-  <!-- nodejs -> Pool -->
+  <!-- pool swimmer -->
+<template v-if="$slidev.configs.flavor === 'devops' || $slidev.configs.flavor === 'atlas'">
+  <img :src="'/icons/terraform.svg'" class="absolute" style="left: 48%; top: 70%; width: 20%; transform: translate(-50%, -50%) rotate(15deg);" />
+</template>
+<template v-else>
   <img :src="'/icons/nodejs.svg'" class="absolute" style="left: 48%; top: 70%; width: 20%; transform: translate(-50%, -50%) rotate(15deg);" />
+</template>
 
   <!-- guardians -->
+<template v-if="$slidev.configs.flavor === 'devops' || $slidev.configs.flavor === 'atlas'">
   <!-- tenv -->
   <img :src="'/icons/tenv.png'" class="absolute" style="left: 69%; top: 22%; width: 8%; transform: translate(-50%, -50%);" />
   <!--tfenv -->
   <div class="absolute text-center font-mono font-bold" style="left: 10%; top: 23%; color: rgb(50, 62, 138); transform: translate(-50%, -50%);">tfenv</div>
   <!--tgenv -->
   <img :src="'/icons/tgenv.png'" class="absolute" style="left: 34%; top: 13%; width: 7%; transform: translate(-50%, -50%);" />
+</template>
+<template v-else>
+  <!-- gvm -->
+  <div class="absolute text-center font-mono font-bold" style="left: 69%; top: 22%; width: 8%; color: rgb(0, 130, 137); transform: translate(-50%, -50%);">gvm</div>
+  <!-- nvm -->
+  <div class="absolute text-center font-mono font-bold" style="left: 10%; top: 23%; color: rgb(50, 62, 138); transform: translate(-50%, -50%);">nvm</div>
+  <!-- sdkman -->
+  <div class="absolute text-center font-mono font-bold" style="left: 34%; top: 13%; color: rgb(196, 89, 17); transform: translate(-50%, -50%);">sdkman</div>
+</template>
+
   <!--pyenv -->
   <img :src="'/icons/pyenv.png'" class="absolute" style="left: 32%; top: 52%; width: 7%; transform: translate(-50%, -50%);" />
   <!-- asdf -->
@@ -158,11 +186,17 @@ Explain the history
   <img :src="'/icons/direnv.svg'" class="absolute" style="left: 66.3%; top: 30.5%; width: 9%; transform: translate(-50%, -50%);" />
 
   <!-- tools -->
+<template v-if="$slidev.configs.flavor === 'devops' || $slidev.configs.flavor === 'atlas'">
   <img :src="'/icons/terraform.svg'" class="absolute" style="left: 33%; top:54.8%; width: 6%; transform: translate(-50%, -50%);" />
   <img :src="'/icons/terragrunt.png'" class="absolute" style="left: 40%; top: 56%; width: 6%; transform: translate(-50%, -50%);" />
   <img :src="'/icons/opentofu.svg'" class="absolute" style="left: 26%; top: 54.2%; width: 6%; transform: translate(-50%, -50%);" />
+</template>
+<template v-else>
+  <img :src="'/icons/go.svg'" class="absolute" style="left: 33%; top:54.8%; width: 6%; transform: translate(-50%, -50%);" />
+  <img :src="'/icons/java.svg'" class="absolute" style="left: 40%; top: 56%; width: 6%; transform: translate(-50%, -50%);" />
+  <img :src="'/icons/nodejs.svg'" class="absolute" style="left: 26%; top: 54.2%; width: 6%; transform: translate(-50%, -50%);" />
+</template>
   <img :src="'/icons/python.svg'" class="absolute" style="left: 72%; top: 60%; width: 7%; transform: translate(-50%, -50%);" />
-  <img :src="'/icons/nodejs.svg'" class="absolute" style="left: 48%; top: 63%; width: 20%; transform: translate(-50%, -50%) rotate(-13deg);" />
 </div>
 
 </div>
